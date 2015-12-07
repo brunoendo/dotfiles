@@ -1,0 +1,26 @@
+- hosts: all
+  tasks:
+    - file:
+        name={{ item }}
+        state=directory
+      with_items:
+        - ~/.bin
+        - ~/.zsh
+        - ~/.vim
+        - ~/.vim/bundle
+    - git:
+        repo=https://github.com/grml/grml-etc-core.git
+        dest=~/.zsh/grml-etc-core/
+    - copy:
+        src={{playbook_dir}}/files/zsh/zshrc
+        dest=~/.zshrc
+    - copy: "src={{ playbook_dir }}/files/tmux.conf dest=~/.tmux.conf"
+    - copy:
+        src={{playbook_dir}}/files/vim/vimrc
+        dest=~/.vimrc
+    - copy:
+        src={{playbook_dir}}/files/vim/dotvim/
+        dest=~/.vim/
+    - git:
+        repo=https://github.com/VundleVim/Vundle.vim.git
+        dest=~/.vim/bundle/Vundle.vim/
